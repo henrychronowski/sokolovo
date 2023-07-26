@@ -4,3 +4,4 @@ This project is practice with using OpenGL from the ground up by building my own
 # dependencies
 - CMAKE 3.27.1
 - GLFW 3?
+- GLAD
