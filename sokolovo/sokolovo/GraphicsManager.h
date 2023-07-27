@@ -24,6 +24,11 @@ public:
 	*/
 	int cleanup();
 
+	/*
+	 *  Graphics Pipeline Functions
+	 */
+	void clearBuffer();
+
 	// ====================================== //
 	// Direct OpenGL passthrough functions    //
 	// ====================================== //

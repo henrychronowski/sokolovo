@@ -40,6 +40,7 @@ int GraphicsManager::init(int width, int height, const char* title)
 	// Set OpenGL viewport
 	glViewport(0, 0, width, height);
 
+	// Set GLFW callbacks
 	glfwSetFramebufferSizeCallback(mainWindow, framebuffer_size_callback);
 
 	return EXIT_SUCCESS;
@@ -56,6 +57,28 @@ void GraphicsManager::framebuffer_size_callback(GLFWwindow* window, int width, i
 	glViewport(0, 0, width, height);
 }
 
+/*
+* Event/Input polling
+*/
+void GraphicsManager::pollEvents() 
+{ 
+	glfwPollEvents();
+	
+	if (glfwGetKey(mainWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	{
+		glfwSetWindowShouldClose(mainWindow, true);
+	}
+}
+
+/*
+ * Graphics Pipeline Functions
+ */
+void GraphicsManager::clearBuffer()
+{
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
 // ====================================== //
 // Direct OpenGL passthrough functions    //
 // ====================================== //
@@ -63,12 +86,8 @@ void GraphicsManager::framebuffer_size_callback(GLFWwindow* window, int width, i
 /*
 * Passthrough for query main window close
 */
-int GraphicsManager::shouldMainWindowClose() { return glfwWindowShouldClose(mainWindow); };
+int GraphicsManager::shouldMainWindowClose() { return glfwWindowShouldClose(mainWindow); }
 /*
 * Passthrough for buffer swap
 */
-void GraphicsManager::swapBuffers() { glfwSwapBuffers(mainWindow); };
-/*
-* Passthrough for polling
-*/
-void GraphicsManager::pollEvents() { glfwPollEvents(); };
+void GraphicsManager::swapBuffers() { glfwSwapBuffers(mainWindow); }

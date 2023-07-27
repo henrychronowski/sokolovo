@@ -17,8 +17,8 @@
 
 #include "GraphicsManager.h"
 
-#include <glad/glad.h>	// GLAD must be included before any other includes that use OpenGL
-#include <GLFW/glfw3.h>
+//#include <glad/glad.h>	// GLAD must be included before any other includes that use OpenGL
+//#include <GLFW/glfw3.h>
 
 // Base params, should be read from file at some point probably
 #define WINDOW_WIDTH 800
@@ -40,6 +40,8 @@ int main()
 
 	while (!graphicsManager->shouldMainWindowClose())
 	{
+		graphicsManager->clearBuffer();
+
 		graphicsManager->swapBuffers();
 		graphicsManager->pollEvents();
 	}
