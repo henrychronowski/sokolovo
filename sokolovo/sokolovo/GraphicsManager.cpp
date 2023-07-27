@@ -56,9 +56,9 @@ void GraphicsManager::framebuffer_size_callback(GLFWwindow* window, int width, i
 	glViewport(0, 0, width, height);
 }
 
-//
-// Direct OpenGL passthrough functions
-//
+// ====================================== //
+// Direct OpenGL passthrough functions    //
+// ====================================== //
 
 /*
 * Passthrough for query main window close

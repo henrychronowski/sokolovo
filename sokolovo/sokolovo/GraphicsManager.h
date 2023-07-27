@@ -24,9 +24,9 @@ public:
 	*/
 	int cleanup();
 
-	//
-	// Direct OpenGL passthrough functions
-	//
+	// ====================================== //
+	// Direct OpenGL passthrough functions    //
+	// ====================================== //
 
 	/*
 	* Passthrough for query main window close 

@@ -25,6 +25,12 @@
 #define WINDOW_HEIGHT 600
 #define APP_TITLE "I may or may not be incompetent"
 
+/*
+* General Path:
+*	- Init
+*	- Run Render/Game loop
+*	- Cleanup
+*/
 int main()
 {
 	GraphicsManager* graphicsManager = new GraphicsManager();
