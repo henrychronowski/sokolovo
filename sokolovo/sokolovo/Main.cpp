@@ -1,3 +1,17 @@
+/*
+* Asteroids clone project
+* Henry Chronowski
+* 
+* This projecct is built with the goal of creating a clone of the asteroids game from scratch 
+*	using OpenGL. The hopeful extension of this is to in the process build a usable personal
+*	OpenGL library for the purpose of easily creating 2D games like this in the future.
+* 
+* References:
+* https://learnopengl.com/In-Practice/2D-Game/Setting-up
+*	Used as the basis for the OpenGL framework although my approach differs in many ways
+* 
+*/
+
 #include <iostream>
 #include <cassert>
 
@@ -6,8 +20,7 @@
 #include <glad/glad.h>	// GLAD must be included before any other includes that use OpenGL
 #include <GLFW/glfw3.h>
 
-// void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-
+// Base params, should be read from file at some point probably
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 #define APP_TITLE "I may or may not be incompetent"
@@ -18,31 +31,6 @@ int main()
 
 	// Init managers
 	graphicsManager->init(WINDOW_WIDTH, WINDOW_HEIGHT, APP_TITLE);
-
-	//glfwInit();
-	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	//GLFWwindow* window = glfwCreateWindow(800, 600, "Learn OpenGL", NULL, NULL);
-	//if (window == NULL)
-	//{
-	//	std::cout << "Failed to create GLFW window\n";
-	//	glfwTerminate();
-	//	return EXIT_FAILURE;
-	//}
-	//glfwMakeContextCurrent(window);
-
-	//if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	//{
-	//	std::cout << "Failed to initialize GLAD\n";
-	//	glfwTerminate();
-	//	return EXIT_FAILURE;
-	//}
-
-	//glViewport(0, 0, 800, 600);
-
-	//glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	while (!graphicsManager->shouldMainWindowClose())
 	{
@@ -59,8 +47,3 @@ int main()
 
 	return EXIT_SUCCESS;
 }
-//
-//void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-//{
-//	glViewport(0, 0, width, height);
-//}
