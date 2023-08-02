@@ -36,7 +36,8 @@ int main()
 	GraphicsManager* graphicsManager = new GraphicsManager();
 
 	// Init managers
-	graphicsManager->init(WINDOW_WIDTH, WINDOW_HEIGHT, APP_TITLE);
+	//graphicsManager->init(WINDOW_WIDTH, WINDOW_HEIGHT, APP_TITLE); // window at specified size
+	graphicsManager->init(APP_TITLE);	// window at native size
 
 	while (!graphicsManager->shouldMainWindowClose())
 	{

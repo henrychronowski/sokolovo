@@ -14,10 +14,45 @@ GraphicsManager::GraphicsManager()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	mainWindow = nullptr;
+	height = 0;
+	width = 0;
 }
 
-int GraphicsManager::init(int width, int height, const char* title)
+int GraphicsManager::init(int inWidth, int inHeight, const char* title)
 {
+	// Create and set GLFW window
+	mainWindow = glfwCreateWindow(inWidth, inHeight, title, NULL, NULL);
+	if (mainWindow == NULL)
+	{
+		std::cout << "Failed to create GLFW window\n";
+		glfwTerminate();
+		return EXIT_FAILURE;
+	}
+
+	glfwMakeContextCurrent(mainWindow);
+
+	// Init GLAD
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout << "Failed to initialize GLAD\n";
+		glfwTerminate();
+		return EXIT_FAILURE;
+	}
+
+	// Set OpenGL viewport
+	glViewport(0, 0, width, height);
+
+	// Set GLFW callbacks
+	glfwSetFramebufferSizeCallback(mainWindow, framebuffer_size_callback);
+
+	return EXIT_SUCCESS;
+}
+
+int GraphicsManager::init(const char* title)
+{
+	// Get display information
+	getDisplayInformation();
+
 	// Create and set GLFW window
 	mainWindow = glfwCreateWindow(width, height, title, NULL, NULL);
 	if (mainWindow == NULL)
@@ -50,6 +85,16 @@ int GraphicsManager::cleanup()
 {
 	glfwTerminate();
 	return EXIT_SUCCESS;
+}
+
+void GraphicsManager::getDisplayInformation()
+{
+	int count;
+	const GLFWvidmode* modes = glfwGetVideoModes(glfwGetPrimaryMonitor(), &count);
+
+	width = modes[count - 1].width;
+	height = modes[count - 1].height;
+	//delete modes;
 }
 
 void GraphicsManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
