@@ -24,7 +24,7 @@ int GraphicsManager::init(int inWidth, int inHeight, const char* title)
 	mainWindow = glfwCreateWindow(inWidth, inHeight, title, NULL, NULL);
 	if (mainWindow == NULL)
 	{
-		std::cout << "Failed to create GLFW window\n";
+		std::cerr << "Failed to create GLFW window\n";
 		glfwTerminate();
 		return EXIT_FAILURE;
 	}
@@ -34,7 +34,7 @@ int GraphicsManager::init(int inWidth, int inHeight, const char* title)
 	// Init GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		std::cout << "Failed to initialize GLAD\n";
+		std::cerr << "Failed to initialize GLAD\n";
 		glfwTerminate();
 		return EXIT_FAILURE;
 	}
@@ -57,7 +57,7 @@ int GraphicsManager::init(const char* title)
 	mainWindow = glfwCreateWindow(width, height, title, NULL, NULL);
 	if (mainWindow == NULL)
 	{
-		std::cout << "Failed to create GLFW window\n";
+		std::cerr << "Failed to create GLFW window\n";
 		glfwTerminate();
 		return EXIT_FAILURE;
 	}
@@ -67,7 +67,7 @@ int GraphicsManager::init(const char* title)
 	// Init GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		std::cout << "Failed to initialize GLAD\n";
+		std::cerr << "Failed to initialize GLAD\n";
 		glfwTerminate();
 		return EXIT_FAILURE;
 	}
