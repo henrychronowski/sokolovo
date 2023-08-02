@@ -17,8 +17,8 @@
 
 #include "GraphicsManager.h"
 
-//#include <glad/glad.h>	// GLAD must be included before any other includes that use OpenGL
-//#include <GLFW/glfw3.h>
+#include <glad/glad.h>	// GLAD must be included before any other includes that use OpenGL
+#include <GLFW/glfw3.h>
 
 // Base params, should be read from file at some point probably
 #define WINDOW_WIDTH 800
@@ -33,11 +33,45 @@
 */
 int main()
 {
+	// temp shit that needs to be moved eventually
+	const char* vertexSource = "#version 330 core\n""layout(location = 0) in vec3 aPos;\n""void main()\n""{\n""gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n""}\0";
+
+	// The actual main
 	GraphicsManager* graphicsManager = new GraphicsManager();
 
 	// Init managers
 	//graphicsManager->init(WINDOW_WIDTH, WINDOW_HEIGHT, APP_TITLE); // window at specified size
 	graphicsManager->init(APP_TITLE);	// window at native size
+
+	// Manual rendering
+	float vertices[] =
+	{
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.5f, 0.0f, 0.0f
+	};
+
+	/// Make a VBO containing a triangle
+	unsigned int VBO;
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	/// Compile a vertex shader from source
+	unsigned int vertexShader;
+	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexSource, NULL);
+	glCompileShader(vertexShader);
+
+	/// check for errors compiling said vertex shader
+	int success;
+	char infolog[512];
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(vertexShader, 512, NULL, infolog);
+		std::cerr << "ERROR::SHADER::VERTEX::COMPILATION FAILED\n" << infolog << "\n";
+	}
 
 	while (!graphicsManager->shouldMainWindowClose())
 	{

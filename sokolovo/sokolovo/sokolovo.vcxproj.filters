@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shader Files">
+      <UniqueIdentifier>{3d415c25-27e2-4af3-ac46-f229880ff560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader Files\Vertex">
+      <UniqueIdentifier>{aaf42969-146c-459f-a64b-d96f053e9550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader Files\Fragment">
+      <UniqueIdentifier>{07bafd09-5307-431b-9379-272da0ca02af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\glad.c">
@@ -29,5 +38,10 @@
     <ClInclude Include="GraphicsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Base.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
   </ItemGroup>
 </Project>
