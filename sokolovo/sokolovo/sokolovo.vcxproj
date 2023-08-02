@@ -140,6 +140,7 @@
     <ClInclude Include="GraphicsManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Base.frag" />
     <None Include="Base.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

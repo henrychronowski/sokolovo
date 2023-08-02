@@ -35,6 +35,7 @@ int main()
 {
 	// temp shit that needs to be moved eventually
 	const char* vertexSource = "#version 330 core\n""layout(location = 0) in vec3 aPos;\n""void main()\n""{\n""gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n""}\0";
+	const char* fragSource = "#version 330 core\n""out vec4 FragColor;\n""void main()\n""{\n""FragColor = vec4(1.0f, 0.5f, 1.0f, 1.0f);\n""}\0";
 
 	// The actual main
 	GraphicsManager* graphicsManager = new GraphicsManager();
@@ -71,6 +72,18 @@ int main()
 	{
 		glGetShaderInfoLog(vertexShader, 512, NULL, infolog);
 		std::cerr << "ERROR::SHADER::VERTEX::COMPILATION FAILED\n" << infolog << "\n";
+	}
+
+	/// Compile a fragment shader from source
+	unsigned int fragmentShader;
+	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragSource, NULL);
+	glCompileShader(fragmentShader);
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(fragmentShader, 512, NULL, infolog);
+		std::cerr << "ERROR::SHADER::FRAGMENT::COMPILATION FAILED\n" << infolog << "\n";
 	}
 
 	while (!graphicsManager->shouldMainWindowClose())

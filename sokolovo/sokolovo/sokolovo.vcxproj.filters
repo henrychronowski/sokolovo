@@ -43,5 +43,8 @@
     <None Include="Base.vert">
       <Filter>Shader Files\Vertex</Filter>
     </None>
+    <None Include="Base.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
   </ItemGroup>
 </Project>
