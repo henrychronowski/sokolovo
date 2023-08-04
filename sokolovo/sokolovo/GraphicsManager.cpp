@@ -21,6 +21,8 @@ GraphicsManager::GraphicsManager()
 	vertexShader = 0;	// I feel like these probably shouldn't be init to 0 but
 	fragmentShader = 0;
 	shaderProgram = 0;
+	VBO = 0;
+	VAO = 0;
 }
 
 void GraphicsManager::compileShaders()
@@ -62,6 +64,12 @@ void GraphicsManager::compileShaders()
 
 void GraphicsManager::createShaderProgram()
 {
+	if (vertexShader == 0 || fragmentShader == 0)
+	{
+		std::cerr << "WARNING::SHADER_PROGRAM::SHADERS_NOT_COMPILED\n" << "Attempting to compile shaders...\n";
+		compileShaders();
+	}
+
 	// Error checking variables
 	int success;
 	char log[GL_LOG_SIZE];
@@ -84,6 +92,10 @@ void GraphicsManager::createShaderProgram()
 
 	// Set shader program to active
 	glUseProgram(shaderProgram);
+
+	// Cleanup shaders
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
 }
 
 int GraphicsManager::init(int inWidth, int inHeight, const char* title)
@@ -161,6 +173,10 @@ int GraphicsManager::cleanup()
 {
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+	glDeleteProgram(shaderProgram);
+
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
 
 	glfwTerminate();
 	return EXIT_SUCCESS;
@@ -180,9 +196,6 @@ void GraphicsManager::framebuffer_size_callback(GLFWwindow* window, int width, i
 	glViewport(0, 0, width, height);
 }
 
-/*
-* Event/Input polling
-*/
 void GraphicsManager::pollEvents() 
 { 
 	glfwPollEvents();
@@ -193,24 +206,48 @@ void GraphicsManager::pollEvents()
 	}
 }
 
-/*
- * Graphics Pipeline Functions
- */
+void GraphicsManager::addStaticObjectToScene(float vertices[], int size)
+{
+
+	// Generate buffers and arrays
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+
+	// Bind VAO
+	glBindVertexArray(VAO);	//binding the VAO first makes the VBO following bound on the call to glVertexAttribPointer
+
+	// Bind & set VBO(s)
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_STATIC_DRAW);
+
+	// Configure vertex attributes
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindVertexArray(0);
+}
+
+// ====================================== //
+// Graphics Pipeline Functions			  //
+// ====================================== //
+
 void GraphicsManager::clearBuffer()
 {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void GraphicsManager::renderObject()
+{
+	glBindVertexArray(VAO);	// Not technically necessary given there is only one but will be eventually necessary
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+
 // ====================================== //
 // Direct OpenGL passthrough functions    //
 // ====================================== //
 
-/*
-* Passthrough for query main window close
-*/
 int GraphicsManager::shouldMainWindowClose() { return glfwWindowShouldClose(mainWindow); }
-/*
-* Passthrough for buffer swap
-*/
 void GraphicsManager::swapBuffers() { glfwSwapBuffers(mainWindow); }

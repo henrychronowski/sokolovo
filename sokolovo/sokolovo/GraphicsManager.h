@@ -9,6 +9,7 @@ private:
 	GLFWwindow* mainWindow;
 	int height, width;
 	unsigned int shaderProgram, vertexShader, fragmentShader;
+	unsigned int VBO, VAO;
 
 	// Callback for resizing the window
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -38,10 +39,20 @@ public:
 	// Cleanup function for normal termination
 	int cleanup();
 
+	// Adds an object to the scene
+	// Right now just takes in a triangle and manually sets it
+	// Eventually this will just add to the pool I think
+	// VAO and VBO for object are generated in this function
+	void addStaticObjectToScene(float vertices[], int size);
+
 	// ====================================== //
 	// Graphics Pipeline Functions			  //
 	// ====================================== //
+	
+	// Clears the buffer
 	void clearBuffer();
+	// Renders the singular VAO/VBO
+	void renderObject();
 
 	// ====================================== //
 	// Direct OpenGL passthrough functions    //

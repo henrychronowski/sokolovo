@@ -17,8 +17,8 @@
 
 #include "GraphicsManager.h"
 
-#include <glad/glad.h>	// GLAD must be included before any other includes that use OpenGL
-#include <GLFW/glfw3.h>
+//#include <glad/glad.h>	// GLAD must be included before any other includes that use OpenGL
+//#include <GLFW/glfw3.h>
 
 // Base params, should be read from file at some point probably
 #define WINDOW_WIDTH 800
@@ -50,32 +50,18 @@ int main()
 		0.0f, 0.5f, 0.0f
 	};
 
-	/// Generate vertex arrays
-	unsigned int VAO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	/// Make a VBO containing a triangle
-	unsigned int VBO;
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	/// Link vertex attributes
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-
+		graphicsManager->addStaticObjectToScene(vertices, 9);
 
 	while (!graphicsManager->shouldMainWindowClose())
 	{
 		graphicsManager->clearBuffer();
 
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-
+		// Render
+		graphicsManager->renderObject();
 		graphicsManager->swapBuffers();
-		graphicsManager->pollEvents();
+
+		// Poll events/input
+		graphicsManager->pollEvents();	// currently processes input
 	}
 
 	// Cleanup managers
