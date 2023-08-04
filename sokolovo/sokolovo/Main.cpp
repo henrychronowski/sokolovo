@@ -86,6 +86,28 @@ int main()
 		std::cerr << "ERROR::SHADER::FRAGMENT::COMPILATION FAILED\n" << infolog << "\n";
 	}
 
+	/// Create a shader program
+	unsigned int shaderProgram;
+	shaderProgram = glCreateProgram();
+
+	/// Attach shaders and link shader program
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		glGetProgramInfoLog(shaderProgram, 512, NULL, infolog);
+		std::cerr << "ERROR::SHADER_PROGRAM::LINK FAILED\n" << infolog << "\n";
+	}
+
+	/// Set active shader program
+	glUseProgram(shaderProgram);
+
+	/// Link vertex attributes
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
 	while (!graphicsManager->shouldMainWindowClose())
 	{
 		graphicsManager->clearBuffer();
@@ -93,6 +115,10 @@ int main()
 		graphicsManager->swapBuffers();
 		graphicsManager->pollEvents();
 	}
+
+	/// Cleanup
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
 
 	// Cleanup managers
 	graphicsManager->cleanup();
