@@ -49,8 +49,13 @@ int main()
 	{
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
-		0.5f, 0.0f, 0.0f
+		0.0f, 0.5f, 0.0f
 	};
+
+	/// Generate vertex arrays
+	unsigned int VAO;
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
 
 	/// Make a VBO containing a triangle
 	unsigned int VBO;
@@ -108,9 +113,14 @@ int main()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+
+
 	while (!graphicsManager->shouldMainWindowClose())
 	{
 		graphicsManager->clearBuffer();
+
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		graphicsManager->swapBuffers();
 		graphicsManager->pollEvents();
