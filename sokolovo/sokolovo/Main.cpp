@@ -68,7 +68,6 @@ int main()
 	graphicsManager->cleanup();
 
 	delete graphicsManager;
-
 	graphicsManager = nullptr;
 
 	return EXIT_SUCCESS;
