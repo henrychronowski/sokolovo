@@ -39,18 +39,19 @@ int main()
 	GraphicsManager* graphicsManager = new GraphicsManager();
 
 	// Init managers
-	graphicsManager->init(WINDOW_WIDTH, WINDOW_HEIGHT, APP_TITLE); // window at specified size
+	graphicsManager->init(APP_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT); // window at specified size
 	//graphicsManager->init(APP_TITLE);	// window at native size
 
 	// Manual rendering
 	float vertices[] =
 	{
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f
+		-0.5f, -0.5f, 0.0f,		// Top right
+		 0.5f, -0.5f, 0.0f,		// bottom right
+		-0.5f, -0.5f, 0.0f,		// bottom left
+		-0.5f,  0.5f, 0.0f		// top left
 	};
 
-		graphicsManager->addStaticObjectToScene(vertices, 9);
+		graphicsManager->addStaticObjectToScene(vertices, 12);
 
 	while (!graphicsManager->shouldMainWindowClose())
 	{

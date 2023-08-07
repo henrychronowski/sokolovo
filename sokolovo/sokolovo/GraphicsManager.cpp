@@ -23,6 +23,7 @@ GraphicsManager::GraphicsManager()
 	shaderProgram = 0;
 	VBO = 0;
 	VAO = 0;
+	EBO = 0;
 }
 
 void GraphicsManager::compileShaders()
@@ -98,44 +99,18 @@ void GraphicsManager::createShaderProgram()
 	glDeleteShader(fragmentShader);
 }
 
-int GraphicsManager::init(int inWidth, int inHeight, const char* title)
+int GraphicsManager::init(const char* title, int inWidth, int inHeight)
 {
-	// Create and set GLFW window
-	mainWindow = glfwCreateWindow(inWidth, inHeight, title, NULL, NULL);
-	if (mainWindow == NULL)
+	// Get display information if necessary
+	if (inWidth == 0 || inHeight == 0)
 	{
-		std::cerr << "ERROR::GLFW_INIT\nFailed to create GLFW window\n";
-		glfwTerminate();
-		return EXIT_FAILURE;
+		getDisplayInformation();
 	}
-
-	glfwMakeContextCurrent(mainWindow);
-
-	// Init GLAD
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	else
 	{
-		std::cerr << "ERROR::GLAD_INIT\nFailed to initialize GLAD\n";
-		glfwTerminate();
-		return EXIT_FAILURE;
+		width = inWidth;
+		height = inHeight;
 	}
-
-	// Set OpenGL viewport
-	glViewport(0, 0, width, height);
-
-	// Set GLFW callbacks
-	glfwSetFramebufferSizeCallback(mainWindow, framebuffer_size_callback);
-
-	// Shader work
-	compileShaders();
-	createShaderProgram();
-
-	return EXIT_SUCCESS;
-}
-
-int GraphicsManager::init(const char* title)
-{
-	// Get display information
-	getDisplayInformation();
 
 	// Create and set GLFW window
 	mainWindow = glfwCreateWindow(width, height, title, NULL, NULL);

@@ -9,7 +9,7 @@ private:
 	GLFWwindow* mainWindow;
 	int height, width;
 	unsigned int shaderProgram, vertexShader, fragmentShader;
-	unsigned int VBO, VAO;
+	unsigned int VBO, VAO, EBO;
 
 	// Callback for resizing the window
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -29,13 +29,9 @@ public:
 	/*
 	*  Initializes the graphics manager, creating a window and checking that it
 	*	worked. After this is run the window is set up and ready to render.
+	*	Grabs highest resolution available for monitor if no size params
 	*/
-	int init(int inWidth, int inHeight, const char* title);
-	/*
-	*  Initializes the graphics manager, creating a window and checking that it
-	*	worked. After this is run the window is set up and ready to render.
-	*/
-	int init(const char* title);
+	int init(const char* title, int inWidth = 0, int inHeight = 0);
 	// Cleanup function for normal termination
 	int cleanup();
 
